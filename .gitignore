@@ -1,0 +1,22 @@
+node_modules/
+dist/
+coverage/
+notes/
+
+# editor/IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# env/secrets - none currently exist, but never commit real ones
+.env
+.env.*
+!.env.example
+
+# logs
+npm-debug.log*
+*.log

@@ -1,0 +1,440 @@
+:root {
+  color-scheme: dark;
+  --bg: #14161a;
+  --panel: #1e2127;
+  --accent: #5b9dff;
+  --left-hand: #5b9dff;
+  --right-hand: #ff8a5b;
+  --text: #e8e8ec;
+  --muted: #9aa0ab;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-size: 17px;
+  background: var(--bg);
+  color: var(--text);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.toolbar {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 16px;
+  background: var(--panel);
+  border-bottom: 1px solid #2a2e36;
+}
+
+.toolbar-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.toolbar-row-secondary {
+  font-size: 15px;
+  color: var(--muted);
+}
+
+.toolbar h1 {
+  font-size: 19px;
+  margin: 0 12px 0 0;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.help-btn {
+  margin-left: auto;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border-radius: 50%;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+.help-btn:hover,
+.help-btn[aria-expanded="true"] {
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+.popover-anchor {
+  position: relative;
+}
+
+.songs-btn[aria-expanded="true"] {
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+button, select, input[type="file"] {
+  font: inherit;
+}
+
+button {
+  background: #2a2e36;
+  color: var(--text);
+  border: 1px solid #3a3f4a;
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+button.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #0d1117;
+  font-weight: 600;
+}
+
+button:disabled,
+button.disabled-look {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Nudges Start Audio when the user tries to play before audio is unlocked. */
+@keyframes shake {
+  10%, 90% { transform: translateX(-2px); }
+  20%, 80% { transform: translateX(5px); }
+  30%, 50%, 70% { transform: translateX(-9px); }
+  40%, 60% { transform: translateX(9px); }
+}
+
+.shake {
+  animation: shake 0.55s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
+.file-btn {
+  position: relative;
+  background: #2a2e36;
+  border: 1px solid #3a3f4a;
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.file-btn input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.mode-select,
+.speed-control {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+  color: var(--muted);
+}
+
+select {
+  background: #2a2e36;
+  color: var(--text);
+  border: 1px solid #3a3f4a;
+  border-radius: 6px;
+  padding: 4px 6px;
+}
+
+.score-badges {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 1.6em;
+}
+
+.score-complete-label {
+  display: none;
+  font-size: 18px;
+  font-weight: 700;
+  color: #3ddc84;
+  margin-right: 2px;
+}
+
+.score-badges.complete .score-complete-label {
+  display: inline;
+  animation: score-complete-pop 0.4s ease-out;
+}
+
+.score-badge {
+  display: none;
+  font-size: 18px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 12px;
+  animation: score-complete-pop 0.25s ease-out;
+}
+
+.score-badge:not(:empty) {
+  display: inline-block;
+}
+
+.score-badge-good {
+  color: #3ddc84;
+  background: rgba(61, 220, 132, 0.15);
+}
+
+.score-badge-short {
+  color: #f5c542;
+  background: rgba(245, 197, 66, 0.15);
+}
+
+.score-badge-long,
+.score-badge-miss,
+.score-badge-wrong {
+  color: #ff5c5c;
+  background: rgba(255, 92, 92, 0.15);
+}
+
+.score-badge-streak {
+  color: var(--accent);
+  background: rgba(91, 157, 255, 0.15);
+}
+
+@keyframes score-complete-pop {
+  0% { transform: scale(0.85); }
+  60% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+#octave-indicator,
+#status-text {
+  font-size: 15px;
+  color: var(--muted);
+  margin-left: auto;
+}
+
+#status-text {
+  margin-left: 8px;
+  color: #ff8a5b;
+}
+
+.keyboard-viewport {
+  position: relative;
+  flex: 1;
+  display: flex;
+}
+
+#falling-notes-canvas {
+  flex: 1;
+  width: 100%;
+  display: block;
+  background: #0d0f13;
+}
+
+.octave-nav {
+  position: absolute;
+  bottom: 0;
+  width: 56px;
+  height: var(--keyboard-height, 150px);
+  padding: 0;
+  font-size: 34px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(42, 46, 54, 0.85);
+  border: 1px solid #3a3f4a;
+  z-index: 2;
+}
+
+.octave-nav:hover {
+  background: rgba(91, 157, 255, 0.3);
+}
+
+.octave-nav-left {
+  left: 0;
+  border-radius: 0 8px 8px 0;
+}
+
+.octave-nav-right {
+  right: 0;
+  border-radius: 8px 0 0 8px;
+}
+
+.countdown-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 50;
+}
+
+.countdown-number {
+  font-size: 180px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--accent, #5b9dff);
+  text-shadow: 0 0 40px rgba(91, 157, 255, 0.5);
+  opacity: 0;
+}
+
+.countdown-number.countdown-tick {
+  animation: countdown-fade 1s ease-out;
+}
+
+@keyframes countdown-fade {
+  0% { opacity: 0; transform: scale(0.75); }
+  20% { opacity: 1; transform: scale(1.08); }
+  35% { opacity: 1; transform: scale(1); }
+  75% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1); }
+}
+
+.help-panel {
+  position: absolute;
+  top: 100%;
+  right: 16px;
+  z-index: 5;
+  max-width: min(520px, calc(100vw - 32px));
+  margin-top: 6px;
+  padding: 12px 16px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--muted);
+  background: var(--panel);
+  border: 1px solid #3a3f4a;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.help-panel.open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.help-panel code {
+  background: #2a2e36;
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.songs-panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 5;
+  width: max(280px, 100%);
+  margin-top: 6px;
+  padding: 6px;
+  background: var(--panel);
+  border: 1px solid #3a3f4a;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.songs-panel.open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.song-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 14px;
+  text-align: left;
+  background: none;
+  border: none;
+  border-radius: 6px;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.song-row:hover {
+  background: rgba(91, 157, 255, 0.12);
+}
+
+.song-row-locked {
+  color: var(--muted);
+  cursor: default;
+}
+
+.song-row-locked:hover {
+  background: none;
+}
+
+.song-row-icon {
+  flex-shrink: 0;
+  width: 1.2em;
+  text-align: center;
+}
+
+.song-row-title {
+  flex: 1;
+}
+
+.song-row-difficulty {
+  font-size: 12px;
+  color: var(--muted);
+  text-transform: capitalize;
+}
+
+.song-row-best {
+  font-size: 12px;
+  font-weight: 700;
+  color: #3ddc84;
+}
+
+/* Colors here must match HOLD_FEEDBACK_COLORS in src/practice/fallingNotes.ts */
+.legend-swatch {
+  font-weight: 600;
+}
+
+.legend-left-hand {
+  color: var(--left-hand);
+}
+
+.legend-right-hand {
+  color: var(--right-hand);
+}
+
+.legend-good {
+  color: #3ddc84;
+}
+
+.legend-short {
+  color: #f5c542;
+}
+
+.legend-long,
+.legend-miss,
+.legend-wrong {
+  color: #ff5c5c;
+}

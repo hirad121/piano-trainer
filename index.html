@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Piano Trainer</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header class="toolbar">
+        <div class="toolbar-row toolbar-row-primary">
+          <h1>Piano Trainer</h1>
+
+          <button id="start-audio-btn" class="primary">Start Audio</button>
+          <button id="play-pause-btn" disabled>Play</button>
+
+          <label class="mode-select">
+            Mode
+            <select id="mode-select">
+              <option value="listen">Listen (auto-play)</option>
+              <option value="practice-wait" selected>Practice - wait for correct note</option>
+              <option value="play">Play only</option>
+            </select>
+          </label>
+
+          <div class="popover-anchor">
+            <button
+              id="songs-btn"
+              class="songs-btn"
+              type="button"
+              aria-haspopup="true"
+              aria-expanded="false"
+              aria-controls="songs-panel"
+            >Songs</button>
+
+            <div id="songs-panel" class="songs-panel" role="menu" aria-hidden="true">
+              <div id="songs-list" class="songs-list"></div>
+            </div>
+          </div>
+
+          <button
+            id="help-btn"
+            class="help-btn"
+            type="button"
+            aria-label="Show keyboard mapping and color legend"
+            aria-expanded="false"
+            aria-controls="help-panel"
+          >?</button>
+        </div>
+
+        <div class="toolbar-row toolbar-row-secondary">
+          <label class="file-btn">
+            Load MIDI
+            <input id="midi-file-input" type="file" accept=".mid,.midi" />
+          </label>
+
+          <label class="speed-control">
+            Speed
+            <input id="speed-slider" type="range" min="0.25" max="1.5" step="0.05" value="1" />
+            <span id="speed-label">100%</span>
+          </label>
+
+          <div id="score-badges" class="score-badges">
+            <span id="score-complete-label" class="score-complete-label">Song complete!</span>
+            <span id="score-good" class="score-badge score-badge-good"></span>
+            <span id="score-short" class="score-badge score-badge-short"></span>
+            <span id="score-long" class="score-badge score-badge-long"></span>
+            <span id="score-miss" class="score-badge score-badge-miss"></span>
+            <span id="score-wrong" class="score-badge score-badge-wrong"></span>
+            <span id="score-streak" class="score-badge score-badge-streak"></span>
+          </div>
+          <span id="octave-indicator">Octave shift: 0</span>
+          <span id="status-text"></span>
+        </div>
+
+        <div id="help-panel" class="help-panel" role="tooltip" aria-hidden="true">
+          <strong>Keyboard mapping</strong> (GarageBand-style - home row = white keys, no mouse needed):
+          <code>A S D F G H J K L ; '</code> = white keys, <code>W E T Y U O P</code> = black keys,
+          <code>Z</code> / <code>X</code> (or the <code>&larr;</code> / <code>&rarr;</code> arrow keys) = shift the whole mapping down / up an octave.
+          Falling notes are colored
+          <span class="legend-swatch legend-left-hand">blue</span> for left hand,
+          <span class="legend-swatch legend-right-hand">orange</span> for right hand.
+          In Practice-wait and Play mode, releasing a key flashes it
+          <span class="legend-swatch legend-good">green</span> for a well-timed hold,
+          <span class="legend-swatch legend-short">amber</span> for too short,
+          <span class="legend-swatch legend-long">red</span> for too long. Pressing a key
+          that isn't currently due flashes it <span class="legend-swatch legend-wrong">red</span>
+          as wrong; in Play mode, a note whose moment passes unplayed also flashes
+          <span class="legend-swatch legend-miss">red</span> as a miss. Play mode is the
+          real test - notes don't wait for you - and clearing a song there at 90%+ good
+          (at 1x speed or faster) unlocks the next one.
+        </div>
+      </header>
+
+      <div class="keyboard-viewport">
+        <canvas id="falling-notes-canvas"></canvas>
+        <button id="octave-down-btn" class="octave-nav octave-nav-left" aria-label="Shift keyboard down an octave">‹</button>
+        <button id="octave-up-btn" class="octave-nav octave-nav-right" aria-label="Shift keyboard up an octave">›</button>
+      </div>
+
+      <div id="countdown-overlay" class="countdown-overlay" aria-hidden="true">
+        <span id="countdown-number" class="countdown-number"></span>
+      </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
