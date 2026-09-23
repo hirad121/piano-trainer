@@ -55,6 +55,17 @@ const RELEASE_FEEDBACK_FADE_MS = 750
 const RELEASE_FEEDBACK_HOLD_MS = 150
 const RELEASE_FEEDBACK_PEAK_ALPHA = 0.9
 
+/**
+ * Fill for a currently-pressed key, white or black. Deliberately NOT the same hex as
+ * either hand color (#5b9dff left / #ff8a5b right, see style.css) despite reusing the
+ * left-hand blue - every bundled song's black-key notes happen to be right-hand-only,
+ * so a black key's own active fill previously matched the right-hand note-bar color
+ * exactly, making a pressed black key look like the orange bar was still stuck on top
+ * of it instead of properly covered. One shared "pressed" color for every key sidesteps
+ * that collision regardless of a song's hand assignment.
+ */
+const ACTIVE_KEY_COLOR = '#5b9dff'
+
 const HOLD_FEEDBACK_COLORS: Record<NoteJudgement, string> = {
   good: '#3ddc84',
   short: '#f5c542',
@@ -189,7 +200,7 @@ export class FallingNotesRenderer {
       const x = this.midiToX(midi, width)
       const w = this.keyWidth(midi, width) - 1
       const active = activeMidi.has(midi)
-      ctx.fillStyle = active ? '#5b9dff' : '#e8e8ec'
+      ctx.fillStyle = active ? ACTIVE_KEY_COLOR : '#e8e8ec'
       ctx.fillRect(x, top, w, KEY_AREA_HEIGHT_PX)
       ctx.strokeStyle = '#0d0f13'
       ctx.strokeRect(x, top, w, KEY_AREA_HEIGHT_PX)
@@ -203,7 +214,7 @@ export class FallingNotesRenderer {
       const x = this.midiToX(midi, width)
       const w = this.keyWidth(midi, width) - 1
       const active = activeMidi.has(midi)
-      ctx.fillStyle = active ? '#ff8a5b' : '#2a2e36'
+      ctx.fillStyle = active ? ACTIVE_KEY_COLOR : '#2a2e36'
       ctx.fillRect(x, top, w, BLACK_KEY_HEIGHT_PX)
 
       this.drawReleaseFeedback(midi, x, w, top, BLACK_KEY_HEIGHT_PX, releaseFeedback)
