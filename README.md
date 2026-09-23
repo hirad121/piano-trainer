@@ -23,9 +23,9 @@ at a time. See `git log` for the actual build order.
 
 ## Try it
 
-**[Open Piano Trainer](#)** <!-- filled in once deployed --> — works in any modern
-desktop browser, nothing to install. Click **Start Audio** first; browsers block
-sound playback until you interact with the page.
+**[piano.hirad.dev](https://piano.hirad.dev)** — works in any modern desktop
+browser, nothing to install. Click **Start Audio** first; browsers block sound
+playback until you interact with the page.
 
 ## Architecture
 

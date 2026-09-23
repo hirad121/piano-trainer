@@ -2,7 +2,7 @@ import { defineConfig } from 'vite'
 
 export default defineConfig({
   root: '.',
-  base: '/piano-trainer/',
+  base: '/',
   server: {
     port: 5173,
   },
