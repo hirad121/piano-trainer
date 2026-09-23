@@ -116,11 +116,11 @@ the library.
 
 ### Songs
 
-Six bundled songs, beginner to advanced. The default first song, "Runaway," is a
-repeated-single-note piece inspired by the solo-piano intro to Kanye West's song of
-the same name (not a verified transcription - see `src/songs/runawayIntro.ts`).
-The rest: Twinkle Twinkle, Mary Had a Little Lamb, Ode to Joy, a two-hand waltz, a
-fast étude - unlocked in order. **Load MIDI** lets you load your own `.mid`/`.midi`
+Six bundled songs, beginner to advanced. The default first song, "Runaway," is the
+solo-piano intro to Kanye West's song of the same name, up to where the beat comes
+in (transcribed from a real MIDI source - see `src/songs/runawayIntro.ts`). The
+rest: Twinkle Twinkle, Mary Had a Little Lamb, Ode to Joy, a two-hand waltz, a fast
+étude - unlocked in order. **Load MIDI** lets you load your own `.mid`/`.midi`
 file - it plays immediately but doesn't join
 the unlock progression.
 
