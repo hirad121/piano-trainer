@@ -7,6 +7,8 @@ const NOTE_NAMES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 
 
 /** Height of the piano keys themselves (unchanged from before the note-name row was added). */
 const KEY_AREA_HEIGHT_PX = 190
+/** Black keys are drawn shorter than white keys, same ratio drawKeyboard() uses to paint them. */
+const BLACK_KEY_HEIGHT_PX = KEY_AREA_HEIGHT_PX * 0.6
 /** Blank breathing room between the bottom of the keys and the note-name row below them. */
 const KEY_LABEL_GAP_PX = 10
 /** Height reserved for the "C4"-style note-name row under each key. */
@@ -130,12 +132,12 @@ export class FallingNotesRenderer {
       // A currently-sounding (or just-finished) note's bar legitimately
       // overhangs past the hit line - that's what makes it look like it
       // slides "into" the keys. It must never overhang further than the
-      // opaque key rectangles reach, though: past KEY_AREA_HEIGHT_PX is the
-      // blank gap/note-name strip added below the keys, which isn't opaque,
-      // so an unclamped bar would bleed through there instead of being
-      // covered.
-      const maxYBottom = hitLineY + KEY_AREA_HEIGHT_PX
-
+      // opaque key rectangle it's sliding into reaches, though: black keys
+      // are drawn at BLACK_KEY_HEIGHT_PX, not the full KEY_AREA_HEIGHT_PX
+      // white keys get (and nothing else is drawn under a black-key column -
+      // see drawKeyboard's white-key loop, which skips black-key pitch
+      // classes entirely) - clamping every note to the white-key height let
+      // a black key's bar bleed through the uncovered strip below it.
       for (const note of song.notes) {
         const noteEnd = note.time + note.duration
         if (noteEnd < currentTime - 0.3) continue
@@ -143,6 +145,8 @@ export class FallingNotesRenderer {
 
         const x = this.midiToX(note.midi, width)
         const noteWidth = this.keyWidth(note.midi, width) - 2
+        const isBlackKey = BLACK_KEY_PITCH_CLASSES.has(((note.midi % 12) + 12) % 12)
+        const maxYBottom = hitLineY + (isBlackKey ? BLACK_KEY_HEIGHT_PX : KEY_AREA_HEIGHT_PX)
         const yBottom = Math.min(maxYBottom, hitLineY - (note.time - currentTime) * pxPerSecond)
         const yTop = hitLineY - (noteEnd - currentTime) * pxPerSecond + NOTE_GAP_PX
         const barHeight = Math.max(4, yBottom - yTop)
@@ -199,12 +203,11 @@ export class FallingNotesRenderer {
       const x = this.midiToX(midi, width)
       const w = this.keyWidth(midi, width) - 1
       const active = activeMidi.has(midi)
-      const blackKeyHeight = KEY_AREA_HEIGHT_PX * 0.6
       ctx.fillStyle = active ? '#ff8a5b' : '#2a2e36'
-      ctx.fillRect(x, top, w, blackKeyHeight)
+      ctx.fillRect(x, top, w, BLACK_KEY_HEIGHT_PX)
 
-      this.drawReleaseFeedback(midi, x, w, top, blackKeyHeight, releaseFeedback)
-      this.drawKeyLabel(midi, x, w, top + blackKeyHeight - 10, '#e8e8ec', 20, transitionProgress)
+      this.drawReleaseFeedback(midi, x, w, top, BLACK_KEY_HEIGHT_PX, releaseFeedback)
+      this.drawKeyLabel(midi, x, w, top + BLACK_KEY_HEIGHT_PX - 10, '#e8e8ec', 20, transitionProgress)
       this.drawNoteNameLabel(midi, x, w, noteNameBaselineY)
     }
   }
