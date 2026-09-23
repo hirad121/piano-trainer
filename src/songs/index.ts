@@ -21,8 +21,8 @@ export interface SongEntry {
  * cleared at >=90% good and >=1x speed (see `progress.ts`'s `isSongUnlocked`).
  */
 export const songLibrary: SongEntry[] = [
+  { id: 'runaway-intro', title: 'Runaway', difficulty: 'beginner', song: runawayIntro },
   { id: 'twinkle-twinkle', title: 'Twinkle Twinkle Little Star', difficulty: 'beginner', song: demoSong },
-  { id: 'runaway-intro', title: 'Runaway (intro, inspired by)', difficulty: 'beginner', song: runawayIntro },
   { id: 'mary-had-a-little-lamb', title: 'Mary Had a Little Lamb', difficulty: 'beginner', song: maryHadALittleLamb },
   { id: 'ode-to-joy', title: 'Ode to Joy', difficulty: 'beginner', song: odeToJoy },
   { id: 'two-hand-waltz', title: 'Two-Hand Waltz', difficulty: 'intermediate', song: twoHandWaltz },

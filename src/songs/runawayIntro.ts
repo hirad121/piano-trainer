@@ -18,7 +18,7 @@ const notes: NoteEvent[] = Array.from({ length: REPEATS }, (_, i) => ({
 }))
 
 export const runawayIntro: Song = {
-  name: 'Runaway (intro, inspired by)',
+  name: 'Runaway',
   notes,
   durationSeconds: REPEATS * INTERVAL,
 }
