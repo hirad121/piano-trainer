@@ -116,10 +116,11 @@ the library.
 
 ### Songs
 
-Five bundled songs, beginner to advanced (Twinkle Twinkle, Mary Had a Little Lamb,
-Ode to Joy, a two-hand waltz, a fast étude), unlocked in order. **Load MIDI** lets
-you load your own `.mid`/`.midi` file - it plays immediately but doesn't join the
-unlock progression.
+Six bundled songs, beginner to advanced (Twinkle Twinkle, a repeated-single-note
+piece inspired by the solo-piano intro to Kanye West's "Runaway", Mary Had a Little
+Lamb, Ode to Joy, a two-hand waltz, a fast étude), unlocked in order. **Load MIDI**
+lets you load your own `.mid`/`.midi` file - it plays immediately but doesn't join
+the unlock progression.
 
 ## What this does and doesn't teach
 

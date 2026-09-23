@@ -3,6 +3,7 @@ import { demoSong } from './demoSong'
 import { fastEtude } from './fastEtude'
 import { maryHadALittleLamb } from './maryHadALittleLamb'
 import { odeToJoy } from './odeToJoy'
+import { runawayIntro } from './runawayIntro'
 import { twoHandWaltz } from './twoHandWaltz'
 
 export type Difficulty = 'beginner' | 'intermediate' | 'advanced'
@@ -21,6 +22,7 @@ export interface SongEntry {
  */
 export const songLibrary: SongEntry[] = [
   { id: 'twinkle-twinkle', title: 'Twinkle Twinkle Little Star', difficulty: 'beginner', song: demoSong },
+  { id: 'runaway-intro', title: 'Runaway (intro, inspired by)', difficulty: 'beginner', song: runawayIntro },
   { id: 'mary-had-a-little-lamb', title: 'Mary Had a Little Lamb', difficulty: 'beginner', song: maryHadALittleLamb },
   { id: 'ode-to-joy', title: 'Ode to Joy', difficulty: 'beginner', song: odeToJoy },
   { id: 'two-hand-waltz', title: 'Two-Hand Waltz', difficulty: 'intermediate', song: twoHandWaltz },
