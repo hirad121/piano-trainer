@@ -74,6 +74,8 @@ npm test            # run the automated test suite once
 npm run test:cov    # run tests with coverage
 ```
 
+Deployed as a Cloudflare Worker (static assets, `wrangler.jsonc`) — `npm run deploy` builds and ships it, if you have your own Cloudflare account and adjust the `routes` domain in `wrangler.jsonc` to match.
+
 ## How to play
 
 Your keyboard's home row is the piano's white keys, the row above is the black

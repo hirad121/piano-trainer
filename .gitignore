@@ -2,6 +2,7 @@ node_modules/
 dist/
 coverage/
 notes/
+.wrangler/
 
 # editor/IDE
 .vscode/
